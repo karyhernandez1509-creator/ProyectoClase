@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Stateful y Stateless</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #f7f3ee;
+            color: #243b53;
+        }
+        main {
+            width: min(960px, 92vw);
+            margin: 3rem auto;
+        }
+        .hero {
+            padding: 2rem;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #0f766e, #14532d);
+            color: white;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+        .card {
+            padding: 1.4rem;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 12px 32px rgba(36, 59, 83, 0.08);
+        }
+        ul {
+            padding-left: 1.2rem;
+        }
+        a {
+            color: inherit;
+        }
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="hero">
+            <h1>Bienvenido {{ user.username }}</h1>
+            <p>Este dashboard demuestra el comportamiento stateful: Django recuerda tu sesión entre peticiones.</p>
+            <div class="actions">
+                <a href="/api/products/">Ver API stateless</a>
+                <a href="/logout/">Cerrar sesión</a>
+            </div>
+        </section>
+
+        <section class="grid">
+            <article class="card">
+                <h2>Estado activo</h2>
+                <p>Tu usuario autenticado está disponible en <strong>request.user</strong>.</p>
+            </article>
+
+            <article class="card">
+                <h2>Productos de ejemplo</h2>
+                <ul>
+                    {% for product in products %}
+                        <li>{{ product.name }} - ${{ product.price }}</li>
+                    {% empty %}
+                        <li>No hay productos registrados todavía.</li>
+                    {% endfor %}
+                </ul>
+            </article>
+        </section>
+    </main>
+</body>
+</html>
